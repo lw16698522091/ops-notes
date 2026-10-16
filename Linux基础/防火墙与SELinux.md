@@ -9,46 +9,28 @@
 - 新增服务端口后，需要放行防火墙规则
 
 ## 1. 防火墙状态查看
-
-- systemctl status firewalld
-
-  查看防火墙服务是否在运行
-
-  如果显示 inactive，说明防火墙没开，通常不是拦截原因
-
-- firewall-cmd --state
-
-  简化输出防火墙运行状态，直接显示 running 或 not running
+| 命令 | 作用 |
+|------|------|
+| systemctl status firewalld | 查看防火墙服务是否在运行；如果显示 inactive，说明防火墙没开，通常不是拦截原因 |
+| firewall-cmd --state | 简化输出防火墙运行状态，直接显示 running 或 not running |
 
 ## 2. 查看当前防火墙规则
-
-- firewall-cmd --list-all
-
-  查看当前区域的所有规则，包括放行的端口、服务、网卡等
-
-  可以查看 80、8080 等端口是否已经放行
+| 命令 | 作用 |
+|------|------|
+| firewall-cmd --list-all | 查看当前区域的所有规则，包括放行的端口、服务、网卡等；可以查看 80、8080 等端口是否已经放行 |
 
 ## 3. 放行端口
+| 命令 | 作用 |
+|------|------|
+| firewall-cmd --add-port=80/tcp --permanent | 放行 80 端口，--permanent 表示永久生效 |
+| firewall-cmd --reload | 重新加载防火墙规则，让永久配置生效 |
 
-- firewall-cmd --add-port=8080/tcp --permanent
-
-  放行 8080 端口，--permanent 表示永久生效
-
-- firewall-cmd --add-port=80/tcp --permanent
-
-  放行 80 端口
-
-- firewall-cmd --reload
-
-  重新加载防火墙规则，让永久配置生效
-
-  注意：执行完 --add-port 后必须 reload，否则不生效
+**注意**：执行完 --add-port 后必须 reload，否则不生效
 
 ## 4. 移除端口
-
-- firewall-cmd --remove-port=8080/tcp --permanent
-
-  移除已放行的端口
+| 命令 | 作用 |
+|------|------|
+| firewall-cmd --remove-port=8080/tcp --permanent | 移除已放行的端口 |
 
   执行后同样需要 firewall-cmd --reload
 
